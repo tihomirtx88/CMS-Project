@@ -10,6 +10,6 @@ foreach ($db as $key => $value) {
 $conection = mysqli_connect($db['db_host'], $db['db_user'], $db['db_pass'], $db['db_name']);
 
 if ($conection) {
-    echo 'We are contected';
+    // echo 'We are contected';
 }
 ?>
