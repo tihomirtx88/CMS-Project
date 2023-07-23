@@ -54,7 +54,7 @@ include "includes/navigation.php";
 
 
             <!-- Second Blog Post -->
-            <h2>
+            <!-- <h2>
                 <a href="#">Blog Post Title</a>
             </h2>
             <p class="lead">
@@ -69,10 +69,10 @@ include "includes/navigation.php";
                 perferendis labore impedit voluptates!</p>
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
-            <hr>
+            <hr> -->
 
             <!-- Third Blog Post -->
-            <h2>
+            <!-- <h2>
                 <a href="#">Blog Post Title</a>
             </h2>
             <p class="lead">
@@ -87,7 +87,7 @@ include "includes/navigation.php";
                 incidunt autem. Magni, ratione.</p>
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
-            <hr>
+            <hr> -->
 
             <!-- Pager -->
             <ul class="pager">
