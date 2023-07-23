@@ -33,6 +33,15 @@ include "includes/admin_header.php";
                                 <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                             </div>
                         </form>
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <label for="category-title">Add Category</label>
+                                <input class="form-control" type="text" name="category-title">
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Edit Category">
+                            </div>
+                        </form>
                     </div>
 
                     <!-- Add categories here -->
