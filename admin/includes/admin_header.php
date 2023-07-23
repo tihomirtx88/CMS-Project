@@ -1,3 +1,5 @@
+<?PHP ob_start(); ?>
+<!-- USING FOR REDIRECT -->
 <?php include "../includes/db.php" ?>
 
 <!DOCTYPE html>
