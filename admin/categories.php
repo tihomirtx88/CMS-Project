@@ -23,7 +23,6 @@ include "includes/admin_header.php";
                     </h1>
                     <div class="col-xs-6">
 
-
                         <form action="" method="post">
                             <div class="form-group">
                                 <label for="category-title">Add Category</label>
@@ -33,15 +32,14 @@ include "includes/admin_header.php";
                                 <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                             </div>
                         </form>
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="category-title">Add Category</label>
-                                <input class="form-control" type="text" name="category-title">
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-primary" type="submit" name="submit" value="Edit Category">
-                            </div>
-                        </form>
+
+                        <?php
+                        if (isset($_GET['edit'])) {
+                            $categ_id_update = $_GET['edit'];
+                            include "includes/update_categories.php";
+                        }
+                        ?>
+
                     </div>
 
                     <!-- Add categories here -->
@@ -65,6 +63,7 @@ include "includes/admin_header.php";
                                     echo " <td>{$categ_id}</td>";
                                     echo " <td>{$categ_title}</td>";
                                     echo " <td><a href='categories.php?delete={$categ_id}'>Delete</a></td>";
+                                    echo " <td><a href='categories.php?edit={$categ_id}'>Edit</a></td>";
                                     echo "</tr>";
                                 }
                                 ?>
@@ -83,7 +82,7 @@ include "includes/admin_header.php";
                                 <!-- ADD CATEGORY QUERY  -->
                                 <?php
                                 if (isset($_POST['submit'])) {
-                                    
+
                                     $category_title = $_POST['category-title'];
                                     if ($category_title == "" || empty($category_title)) {
                                         echo "This field should not be empty";
