@@ -1,12 +1,12 @@
 <?php
-include "includes/header.php";
+include "includes/admin_header.php";
 ?>
 
 <div id="wrapper">
 
 
     <?php
-    include "includes/navigation.php";
+    include "includes/admin_navigation.php";
     ?>
 
 
@@ -34,21 +34,31 @@ include "includes/header.php";
                      </div>
                      <!-- Add categories here -->
                      <div class="col-xs-6">
-                        <table  class="table table-bordered table-hover">
+                        <?php
+                        $query = 'SELECT * FROM category ';
+                        $select_category = mysqli_query($conection, $query);
+                        ?>
+                        <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Id</th>
                                     <th>Category Title</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                  <td>cats</td>
-                                  <td>dogs</td>
-                                </tr>
+                            <tbody>                       
+                                    <?php
+                                    while ($row = mysqli_fetch_assoc($select_category)) {
+                                        $categ_title =  $row['category_title'];
+                                        $categ_id =  $row['category_id'];
+                                        echo "<tr>";
+                                        echo " <td>{$categ_id}</td>";
+                                        echo " <td>{$categ_title}</td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>                       
                             </tbody>
                         </table>
-                     </div>
+                    </div>
                 </div>
             </div>
             <!-- /.row -->
@@ -60,5 +70,5 @@ include "includes/header.php";
     <!-- /#page-wrapper -->
 
     <?php
-    include "includes/footer.php";
+    include "includes/admin_footer.php";
     ?>
