@@ -1,12 +1,12 @@
 <?php
-include "includes/header.php";
+include "includes/admin_header.php";
 ?>
 
 <div id="wrapper">
     
 
     <?php
-    include "includes/navigation.php";
+    include "includes/admin_navigation.php";
     ?>
 
 
@@ -32,5 +32,5 @@ include "includes/header.php";
     <!-- /#page-wrapper -->
 
     <?php
-    include "includes/footer.php";
+    include "includes/admin_footer.php";
     ?>
