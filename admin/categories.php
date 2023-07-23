@@ -22,9 +22,27 @@ include "includes/admin_header.php";
                         <small>Author</small>
                     </h1>
                      <div class="col-xs-6">
-                     <form action="">
+
+                    <?php
+                      if (isset($_POST['submit'])) {
+                        $_POST['category-title'];
+                        if ($_POST['category-title'] == "" || empty($_POST['category-title'])) {
+                            echo "This field should not be empty";
+                        }else{
+                            $query = "INSERT INTO category(category_title) ";
+                            $query .= "VALUE('{$_POST['category-title']}') ";
+                            $crate_category_query = mysqli_query($conection, $query);
+
+                            if (!$crate_category_query) {
+                               die('query falied'. mysqli_error_list($conection));
+                            }
+                        }
+                      }
+                    ?>
+ 
+                     <form action="" method="post">
                        <div class="form-group">
-                          <label for="category-title">Category Title</label>
+                          <label for="category-title">Add Category</label>
                           <input class="form-control" type="text" name="category-title">
                        </div>
                        <div class="form-group">
