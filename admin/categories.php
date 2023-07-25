@@ -1,5 +1,6 @@
 <?php
 include "includes/admin_header.php";
+include "../includes/db.php";
 ?>
 
 <div id="wrapper">
