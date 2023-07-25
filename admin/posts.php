@@ -1,5 +1,6 @@
 <?php
 include "includes/admin_header.php";
+include "../includes/db.php";
 ?>
 
 <div id="wrapper">
@@ -28,12 +29,12 @@ include "includes/admin_header.php";
                       }
 
                       switch ($source) {
-                        case 'value':
-                            # code...
-                            break;
+                        case 'add_post':
+                          include "add_post.php";
+                        break;
                         
                         default:
-                          include 'includes/view_all_post.php';
+                          include "includes/view_all_post.php";
                         break;
                       }
                     ?>

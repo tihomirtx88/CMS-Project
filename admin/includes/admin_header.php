@@ -1,6 +1,5 @@
 <?PHP ob_start(); ?>
 <!-- USING FOR REDIRECT -->
-<?php include "../includes/db.php" ?>
 <?php include "functions.php" ?>
 
 <!DOCTYPE html>
