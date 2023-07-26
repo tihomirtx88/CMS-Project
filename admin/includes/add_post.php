@@ -37,8 +37,20 @@
     </div>
 
     <div class="form-group">
-        <label for="post-category-id">Post Category Id</label>
-        <input class="form-cotrol" type="text" name="post_category_id">
+       <select name="post_category_id" id="post_category_id">
+        <!-- GET ALL CATEGORY FOR SELECT ELEMENT  -->
+          <?php 
+             $query = "SELECT * FROM category ";
+             $select_category = mysqli_query($conection, $query);
+             confirmQuery($select_category);
+             while ($row = mysqli_fetch_assoc($select_category)) {
+                 $categ_title_update =  $row['category_title'];
+                 $categ_id_update =  $row['category_id'];
+
+                 echo "<option value='{$categ_id_update}'>{$categ_title_update}</option>";
+             }
+          ?>
+       </select>
     </div>
 
     <div class="form-group">
