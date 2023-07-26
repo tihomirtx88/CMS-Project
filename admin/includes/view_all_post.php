@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Post Category Id</th>
+            <th>Post Category</th>
             <th>Title</th>
             <th>Author</th>
             <th>Status</th>
@@ -10,10 +10,12 @@
             <th>Image</th>
             <th>Comments</th>
             <th>Tags</th>
+            <th>Post Comments Count</th>
         </tr>
     </thead>
     <tbody>
         <?php
+        // GET ALL POSTS
         $query = 'SELECT * FROM posts ';
         $select_posts = mysqli_query($conection, $query);
         while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -30,7 +32,16 @@
     
             echo "<tr>";
             echo "<td>$post_id</td>";
-            echo "<td>$post_category_id</td>";
+ 
+            $query = "SELECT * FROM category WHERE category_id LIKE $post_category_id ";
+            $select_category = mysqli_query($conection, $query);
+            while ($row = mysqli_fetch_assoc($select_category)) {
+                $categ_title =  $row['category_title'];
+                $categ_id =  $row['category_id'];
+            echo "<td>$categ_title</td>";
+            }
+
+
             echo "<td>$post_title</td>";
             echo "<td>$post_author</td>";
             echo "<td>$post_status</td>";
@@ -39,6 +50,7 @@
             echo "<td>$post_content</td>";
             echo "<td>$post_tags</td>";
             echo "<td>$post_comments_count</td>";
+            echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
             echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
             echo "</tr>";
         }
@@ -46,7 +58,7 @@
 
     </tbody>
 </table>
-
+<!-- DELETE POST  -->
 <?php
   if (isset($_GET['delete'])) {
     $the_post_id = $_GET['delete'];

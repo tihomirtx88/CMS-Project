@@ -2,6 +2,13 @@
 
 <?php
 
+function confirmQuery($result){
+    global $conection;
+    if (!$result) {
+        die("QUERY FALIED" . mysqli_error($conection));
+    }
+}
+
 function insert_categories()
 {
     global $conection;
