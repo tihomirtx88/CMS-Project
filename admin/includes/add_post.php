@@ -26,9 +26,7 @@
     // "VALUES(1,'2','3',now(),'4','5','6','7',{$post_comments_count},'{$post_status}' )";
 
     $crate_post_query = mysqli_query($conection, $query);
-    if (!$crate_post_query) {
-        die("query falided" . mysqli_error($conection));
-    }
+    confirmQuery($crate_post_query);
    }
 ?>
 
