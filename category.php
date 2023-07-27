@@ -18,8 +18,12 @@ include "includes/navigation.php";
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <?php
+
+            if (isset($_GET['category'])) {
+                $the_post_category_id = $_GET['category'];
+            }
             // Display All Posts
-            $query = "SELECT * FROM posts";
+            $query = "SELECT * FROM posts WHERE post_category_id LIKE $the_post_category_id ";
             $select_all_posts_query = mysqli_query($conection, $query);
             while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                 $post_id = $row['post_id'];
