@@ -43,7 +43,14 @@
             echo "<td>$comment_content</td>";
             echo "<td>$comment_email</td>";
             echo "<td>$comment_status</td>";
-            echo "<td>it resposnse for </td>";
+            // REALTION BETWEEN POST AND COMMENT 
+            $query = "SELECT * FROM posts WHERE post_id LIKE $comment_post_id ";
+            $select_post_id_query = mysqli_query($conection, $query);
+            while ($row = mysqli_fetch_assoc($select_post_id_query)) {
+                $post_id = $row['post_id'];
+                $post_title = $row['post_title'];
+                echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
+            }
             echo "<td>$comment_date</td>";
 
             
@@ -51,7 +58,7 @@
             echo "<td><a href='posts.php?delete={$comment_id}'>UnApprove</a></td>";
 
             echo "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Edit</a></td>";
-            echo "<td><a href='posts.php?delete={$comment_id}'>Delete</a></td>";
+            echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
             echo "</tr>";
         }
         ?>
@@ -61,8 +68,9 @@
 <!-- DELETE POST  -->
 <?php
   if (isset($_GET['delete'])) {
-    $the_post_id = $_GET['delete'];
-    $query = "DELETE FROM posts WHERE post_id LIKE {$the_post_id} ";
+    $the_comment_id = $_GET['delete'];
+    $query = "DELETE FROM comments WHERE comment_id LIKE {$the_comment_id} ";
     $delete_query = mysqli_query($conection, $query);
+    header("Location: comments.php");
   }
 ?>
