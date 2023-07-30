@@ -14,7 +14,7 @@
     $post_content =  $_POST['post_content'];
 
     $post_date =  date('d-m-y');
-    $post_comment_count = 4;
+    $post_comment_count = 0;
     move_uploaded_file($post_image_temp, "../images/$post_image" );
 
     
@@ -22,8 +22,6 @@
 
     $query .= 
     "VALUES({$post_category_id},'{$post_title}','{$post_author}',now() ,'{$post_image}','{$post_content}','{$post_tags}',{$post_comment_count},'{$post_status}' )";
-    // $query .= 
-    // "VALUES(1,'2','3',now(),'4','5','6','7',{$post_comments_count},'{$post_status}' )";
 
     $crate_post_query = mysqli_query($conection, $query);
     confirmQuery($crate_post_query);
