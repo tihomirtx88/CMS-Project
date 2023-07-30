@@ -8,6 +8,10 @@
             <th>Lastname</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Admin</th>
+            <th>Subscriber</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -42,10 +46,10 @@
             //     $post_title = $row['post_title'];
             //     echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
             // }    
-            // echo "<td><a href='comments.php?approved='>Approved</a></td>";
-            // echo "<td><a href='comments.php?unapproved='>Unapproved</a></td>";
+            echo "<td><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
+            echo "<td><a href='users.php?change_to_subscriber={$user_id}'>Subscriber</a></td>";
 
-            // echo "<td><a href='posts.php?source=edit_post&p_id='>Edit</a></td>";
+            echo "<td><a href='users.php?source=edit_user&edit_user={$user_id}'>Edit</a></td>";
             echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
             echo "</tr>";
         }
@@ -62,18 +66,18 @@
     $delete_query = mysqli_query($conection, $query);
     header("Location: users.php");
   }
-//    UNAPPROVE COMMENT
-  if (isset($_GET['unapproved'])) {
-    $the_comment_id = $_GET['unapproved'];
-    $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id LIKE $the_comment_id ";
-    $unapprove_query = mysqli_query($conection, $query);
-    header("Location: comments.php");
+//   CHANGE TO SUBSCRIBER
+  if (isset($_GET['change_to_subscriber'])) {
+    $the_user_id = $_GET['change_to_subscriber'];
+    $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = $the_user_id ";
+    $subscriber_change_query = mysqli_query($conection, $query);
+    header("Location: users.php");
   }
-  //    APPROVE COMMENT
-  if (isset($_GET['approved'])) {
-    $the_comment_id = $_GET['approved'];
-    $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id LIKE $the_comment_id ";
-    $approve_query = mysqli_query($conection, $query);
-    header("Location: comments.php");
+  //    CHANGE TO ADMIN 
+  if (isset($_GET['change_to_admin'])) {
+    $the_user_id = $_GET['change_to_admin'];
+    $query = "UPDATE users SET user_role = 'admin' WHERE user_id = $the_user_id ";
+    $admin_change_query = mysqli_query($conection, $query);
+    header("Location: users.php");
   }
 ?>
