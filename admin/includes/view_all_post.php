@@ -10,7 +10,7 @@
             <th>Image</th>
             <th>Comments</th>
             <th>Tags</th>
-            <th>Post Comments Count</th>
+            <th>Comments</th>
         </tr>
     </thead>
     <tbody>
@@ -27,8 +27,9 @@
             $post_image =  $row['post_image'];
             $post_content =  $row['post_content'];
             $post_tags =  $row['post_tags'];
-            $post_comments_count =  $row['post_comment_count'];
+            $post_comment_count =  $row['post_comment_count'];
             $post_status =  $row['post_status'];
+            var_dump($post_comment_count);
     
             echo "<tr>";
             echo "<td>$post_id</td>";
@@ -49,7 +50,7 @@
             echo "<td><img width='100' height='auto' src='../images/$post_image' alt='images''></td>";
             echo "<td>$post_content</td>";
             echo "<td>$post_tags</td>";
-            echo "<td>$post_comments_count</td>";
+            echo "<td>$post_comment_count</td>";
             echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
             echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
             echo "</tr>";
@@ -64,5 +65,6 @@
     $the_post_id = $_GET['delete'];
     $query = "DELETE FROM posts WHERE post_id LIKE {$the_post_id} ";
     $delete_query = mysqli_query($conection, $query);
+    header("Location: view_all_post.php");
   }
 ?>

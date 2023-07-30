@@ -8,15 +8,15 @@
             <th>Status</th>
             <th>In Response To</th>
             <th>Date</th>
-            <th>Aprove</th>
-            <th>UnAprove</th>
+            <th>Aproved</th>
+            <th>Unaproved</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        // GET ALL POSTS
+        // GET ALL COMMENTS
         $query = 'SELECT * FROM comments ';
         $select_comments = mysqli_query($conection, $query);
         while ($row = mysqli_fetch_assoc($select_comments)) {
@@ -43,6 +43,7 @@
             echo "<td>$comment_content</td>";
             echo "<td>$comment_email</td>";
             echo "<td>$comment_status</td>";
+            
             // REALTION BETWEEN POST AND COMMENT 
             $query = "SELECT * FROM posts WHERE post_id LIKE $comment_post_id ";
             $select_post_id_query = mysqli_query($conection, $query);
@@ -54,8 +55,8 @@
             echo "<td>$comment_date</td>";
 
             
-            echo "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Approve</a></td>";
-            echo "<td><a href='posts.php?delete={$comment_id}'>UnApprove</a></td>";
+            echo "<td><a href='comments.php?approved={$comment_id}'>Approved</a></td>";
+            echo "<td><a href='comments.php?unapproved={$comment_id}'>Unapproved</a></td>";
 
             echo "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Edit</a></td>";
             echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
@@ -65,12 +66,27 @@
 
     </tbody>
 </table>
-<!-- DELETE POST  -->
+
 <?php
+// DELETE COMMENT
   if (isset($_GET['delete'])) {
     $the_comment_id = $_GET['delete'];
     $query = "DELETE FROM comments WHERE comment_id LIKE {$the_comment_id} ";
     $delete_query = mysqli_query($conection, $query);
+    header("Location: comments.php");
+  }
+//    UNAPPROVE COMMENT
+  if (isset($_GET['unapproved'])) {
+    $the_comment_id = $_GET['unapproved'];
+    $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id LIKE $the_comment_id ";
+    $unapprove_query = mysqli_query($conection, $query);
+    header("Location: comments.php");
+  }
+  //    APPROVE COMMENT
+  if (isset($_GET['approved'])) {
+    $the_comment_id = $_GET['approved'];
+    $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id LIKE $the_comment_id ";
+    $approve_query = mysqli_query($conection, $query);
     header("Location: comments.php");
   }
 ?>
