@@ -22,6 +22,7 @@ if (isset($_POST['create_user'])) {
 
     $crate_user_query = mysqli_query($conection, $query);
     confirmQuery($crate_user_query);
+    echo "User Created: " . " " . "<a href='users.php'>View Users</a>";
 }
 ?>
 

@@ -142,17 +142,21 @@ include "../includes/db.php";
             </div>
             <!-- /.row -->
             <?php
-                 $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
-                 $select_all_draft_post = mysqli_query($conection, $query);
-                 $post_draft_counts = mysqli_num_rows($select_all_draft_post);
+            $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+            $select_all_published_post = mysqli_query($conection, $query);
+            $post_published_counts = mysqli_num_rows($select_all_published_post);
 
-                 $query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ";
-                 $select_all_unapproved_comments = mysqli_query($conection, $query);
-                 $comments_unapproved_counts = mysqli_num_rows($select_all_unapproved_comments);
+            $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
+            $select_all_draft_post = mysqli_query($conection, $query);
+            $post_draft_counts = mysqli_num_rows($select_all_draft_post);
 
-                 $query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
-                 $select_all_subsribers_users = mysqli_query($conection, $query);
-                 $users_subscribers_counts = mysqli_num_rows($select_all_subsribers_users);
+            $query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ";
+            $select_all_unapproved_comments = mysqli_query($conection, $query);
+            $comments_unapproved_counts = mysqli_num_rows($select_all_unapproved_comments);
+
+            $query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
+            $select_all_subsribers_users = mysqli_query($conection, $query);
+            $users_subscribers_counts = mysqli_num_rows($select_all_subsribers_users);
             ?>
 
             <div class="row">
@@ -166,12 +170,12 @@ include "../includes/db.php";
                         var data = google.visualization.arrayToDataTable([
                             ['Date', 'Count'],
                             <?php
-                              $element_text = ['Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers Users', 'Categories'];
-                              $element_count = [$post_counts, $post_draft_counts, $comments_counts, $comments_unapproved_counts, $users_counts, $users_subscribers_counts, $categories_counts];
+                            $element_text = ['All Post', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers Users', 'Categories'];
+                            $element_count = [$post_counts, $post_published_counts, $post_draft_counts, $comments_counts, $comments_unapproved_counts, $users_counts, $users_subscribers_counts, $categories_counts];
 
-                              for ($i=0; $i < 7; $i++) { 
+                            for ($i = 0; $i < 8; $i++) {
                                 echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
-                              }
+                            }
                             ?>
                             // ['Posts', 1000],
                         ]);
@@ -188,7 +192,7 @@ include "../includes/db.php";
                         chart.draw(data, google.charts.Bar.convertOptions(options));
                     }
                 </script>
-                 <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+                <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
             </div>
 
         </div>
