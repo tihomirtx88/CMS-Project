@@ -72,8 +72,8 @@
     </div>
 
     <div class="form-group">
-        <label for="content">Post Content</label>
-        <textarea class="form-cotrol" name="post_content" id="" cols="30" rows="10"></textarea>
+        <label for="summernote">Post Content</label>
+        <textarea class="form-cotrol" name="post_content" id="summernote" cols="30" rows="10"></textarea>
     </div>
 
     <div class="form-group">
