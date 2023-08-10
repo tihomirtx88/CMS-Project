@@ -58,8 +58,11 @@
     </div>
 
     <div class="form-group">
-        <label for="status">Post Status</label>
-        <input class="form-cotrol" type="text" name="post_status">
+        <select name="post_status" id="">
+            <option value="draft">Post Status</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+        </select>
     </div>
 
     <div class="form-group">
