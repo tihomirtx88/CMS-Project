@@ -1,3 +1,7 @@
+<?PHP ob_start(); ?>
+<!-- USING FOR REDIRECT -->
+<?PHP session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

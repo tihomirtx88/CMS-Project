@@ -26,7 +26,6 @@ if (isset($_POST['update_post'])) {
 
     $post_image = $_FILES['post_image']['name'];
     $post_image_temp = $_FILES['post_image']['tmp_name'];
-    // var_dump($post_status);
 
     $post_content = $_POST['post_content'];
     $post_tags = $_POST['post_tags'];
@@ -54,6 +53,8 @@ if (isset($_POST['update_post'])) {
 
     $update_post = mysqli_query($conection, $query);
     confirmQuery($update_post);
+    echo "<p class='bg-success'>Post Updated: " . " " . "<a href='../post.php?p_id={$the_post_id}'>View Post</a></p>";
+    echo "<a class='bg-success href='posts.php'>Edit More Posts</a>";
 }
 ?>
 
@@ -87,13 +88,13 @@ if (isset($_POST['update_post'])) {
     </div>
 
     <div class="form-group">
-        <select name="$post_status" id="">
+        <select name="post_status" id="">
             <option value='<?php echo $post_status; ?>'><?php echo $post_status; ?></option>
             <?php
               if ($post_status == 'published') {
-                echo "<option value='draft'>Draft</option>";
+                echo "<option value='draft'>draft</option>";
               }else{
-                echo "<option value='published'>Published</option>";
+                echo "<option value='published'>published</option>";
               }
             ?>
         </select>
