@@ -25,6 +25,7 @@
 
     $crate_post_query = mysqli_query($conection, $query);
     confirmQuery($crate_post_query);
+    echo "<p class='bg-success'>Post Created: " . " " . "<a href='posts.php'>View Posts</a></p>";
    }
 ?>
 
