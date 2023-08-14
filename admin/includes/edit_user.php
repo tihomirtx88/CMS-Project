@@ -38,9 +38,21 @@ if (isset($_POST['update_user'])) {
         }
     }
 
+    $query = "SELECT user_randSalt FROM users";
+    $select_randSalt_query = mysqli_query($conection, $query);
+   
+
+    if (!$select_randSalt_query) {
+        die("Query Falied" . mysqli_error($conection));
+    }
+
+    $row = mysqli_fetch_array($select_randSalt_query);
+    $salt = $row['user_randSalt'];
+    $HashedPassword = crypt($user_password, $salt);
+    
     $query = "UPDATE users SET ";
     $query .= "user_username = '{$user_username}', ";
-    $query .= "user_password = {$user_password}, ";
+    $query .= "user_password = '{$HashedPassword}', ";
     $query .= "user_firstname = '{$user_firstname}', ";
     $query .= "user_lastname = '{$user_lastname}', ";
     $query .= "user_image = '{$user_image}', ";
@@ -66,7 +78,7 @@ if (isset($_POST['update_user'])) {
     </div>
 
    <select name="user_role" id="">
-     <option value="subscriber"><?php echo $user_role; ?></option>
+     <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
     <?php  
       if ($user_role == 'admin') {
          echo "<option value='subscriber'>subscriber</option>";
