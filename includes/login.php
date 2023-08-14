@@ -2,12 +2,14 @@
 
 <?php session_start(); ?>
 
+
 <?php
 if (isset($_POST['login'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
   $username = mysqli_real_escape_string($conection, $username);
   $password = mysqli_real_escape_string($conection, $password);
+
 
   $query = "SELECT * FROM users WHERE user_username = '{$username}' ";
   $select_user_query = mysqli_query($conection, $query);
@@ -22,14 +24,22 @@ if (isset($_POST['login'])) {
     $user_username = $row['user_username'];
     $user_password = $row['user_password'];
     $user_role = $row['user_role'];
+    $salt = $row['user_randSalt'];
   }
 
-  if ($username === $user_username && $password === $user_password) {
+  $HashedPassword = crypt($password, $user_password);
+  
+  if ($HashedPassword === $user_password) {
     $_SESSION['username'] = $user_username;
     $_SESSION['user_firstname'] = $user_firstname;
     $_SESSION['user_lastname'] = $user_lastname;
     $_SESSION['user_role'] = $user_role;
-    header("Location: ../admin/index.php");
+    if ($user_role == 'admin') {
+      header("Location: ../admin/index.php");
+    }else{
+      header("Location: ../index.php");
+    }
+    
   } else {
     header("Location: ../index.php");
   }
