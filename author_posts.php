@@ -20,8 +20,9 @@ include "includes/navigation.php";
             <?php
             if (isset($_GET['p_id'])) {
                 $the_post_id = $_GET['p_id'];
+                $the_post_author = $_GET['author'];
             }
-            $query = "SELECT * FROM posts WHERE post_id LIKE $the_post_id ";
+            $query = "SELECT * FROM posts WHERE post_author = '{$the_post_author}' ";
             $select_all_posts_query = mysqli_query($conection, $query);
             while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                 $post_id = $row['post_id'];
@@ -43,7 +44,7 @@ include "includes/navigation.php";
                     </a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php">
+                   All post by <a href="author_posts.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id ?>">
                         <?php echo $post_author ?>
                     </a>
                 </p>
@@ -90,60 +91,7 @@ include "includes/navigation.php";
                 }
             }
             ?>
-
-            <!-- Comments Form -->
-            <div class="well">
-                <h4>Leave a Comment:</h4>
-                <form role="form" action="" method="post">
-                    <div class="form-group">
-                        <label for="comment_author">Author</label>
-                        <input type="text" class="form-control" name="comment_author">
-                    </div>
-                    <div class="form-group">
-                        <label for="comment_email">Email</label>
-                        <input type="email" class="form-control" name="comment_email">
-                    </div>
-
-                    <div class="form-group">
-                        <textarea name="comment_content" class="form-control" rows="3"></textarea>
-                    </div>
-                    <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-
             <hr>
-
-            <!-- Posted Comments -->
-            <?php
-            // GET ALL COMENTS WHERE COMMENT ID IS LIKE POST ID AND WHILE LOOP THEM
-            $query = "SELECT * FROM comments WHERE comment_post_id = $the_post_id ";
-            $query .= "AND comment_status = 'approved' ";
-            $query .= "ORDER BY comment_id DESC ";
-            $select_comment_query = mysqli_query($conection, $query);
-            if (!$query) {
-                die("QUERY FALIED" . mysqli_error($conection));
-            }
-            while ($row = mysqli_fetch_array($select_comment_query)) {
-                $comment_date = $row['comment_date'];
-                $comment_content = $row['comment_content'];
-                $comment_author = $row['comment_author'];
-                ?>
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">
-                            <?php echo $comment_author; ?>
-                            <small>
-                                <?php echo $comment_date; ?>
-                            </small>
-                        </h4>
-                        <?php echo $comment_content; ?>
-                    </div>
-                </div>
-            <?php } ?>
         </div>
         <!-- Blog Sidebar Widgets Column -->
         <?php

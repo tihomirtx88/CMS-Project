@@ -19,6 +19,28 @@
              $update_to_delete_status = mysqli_query($conection, $query);
              confirmQuery($update_to_delete_status);
               break;
+        case 'clone':
+             $query = "SELECT * FROM posts WHERE post_id = '{$postValueId}' ";
+             $clone_query_status = mysqli_query($conection, $query);
+             confirmQuery($clone_query_status);
+
+             while ($row = mysqli_fetch_array($clone_query_status)) {
+                $post_title = $row['post_title'];
+                $post_category_id = $row['post_category_id'];
+                $post_date = $row['post_date'];
+                $post_author = $row['post_author'];
+                $post_status = $row['post_status'];
+                $post_image = $row['post_image'];
+                $post_tags = $row['post_tags'];
+                $post_content = $row['post_content'];
+                $post_comment_count= $row['post_comment_count'];
+             }
+
+             $query = "INSERT INTO posts(post_title, post_category_id, post_date, post_author, post_status, post_image, post_tags, post_content, post_comment_count) ";
+             $query .= "VALUES('{$post_title}',{$post_category_id},'{$post_date}','{$post_author}','{$post_status}','{$post_image}','{$post_tags}','{$post_content}',{$post_comment_count}) ";
+             $copy_query = mysqli_query($conection, $query);
+             confirmQuery($copy_query);
+             break;
         default:
             # code...
             break;
@@ -35,6 +57,7 @@
               <option value="published">Publish</option>
               <option value="draft">Draft</option>
               <option value="delete">Delete</option>
+              <option value="clone">Clone</option>
            </select>
         </div>
         <div class="col-xs-4">
@@ -63,7 +86,7 @@
         <tbody>
             <?php
             // GET ALL POSTS
-            $query = 'SELECT * FROM posts ';
+            $query = 'SELECT * FROM posts ORDER BY post_id DESC ';
             $select_posts = mysqli_query($conection, $query);
             while ($row = mysqli_fetch_assoc($select_posts)) {
                 $post_id =  $row['post_id'];
@@ -91,7 +114,7 @@
                     echo "<td>$categ_title</td>";
                 }
 
-
+                // Vizualizate
                 echo "<td>$post_title</td>";
                 echo "<td>$post_author</td>";
                 echo "<td>$post_status</td>";
