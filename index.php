@@ -39,7 +39,7 @@ include "includes/navigation.php";
             $convertCount = (int)$count;
 
             // Display All Posts
-            $query = "SELECT * FROM posts LIMIT $page_1, $per_page ";
+            $query = "SELECT * FROM posts LIMIT $per_page OFFSET $page_1";
             $select_all_posts_query = mysqli_query($conection, $query);
             while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                 $post_id = $row['post_id'];

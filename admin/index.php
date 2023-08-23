@@ -6,8 +6,6 @@ include "../includes/db.php";
 ?>
 
 <div id="wrapper">
-
-
     <?php
     include "includes/admin_navigation.php";
     ?>
