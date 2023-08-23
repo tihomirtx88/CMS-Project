@@ -13,16 +13,18 @@ if (isset($_POST['register'])) {
         $email = mysqli_real_escape_string($conection, $email);
         $password = mysqli_real_escape_string($conection, $password);
 
-        $query = "SELECT user_randSalt FROM users ";
-        $select_randSalt_query = mysqli_query($conection, $query);
+        $password = password_hash($password, PASSWORD_BCRYPT, array('cost => 12'));
 
-        if (!$select_randSalt_query) {
-            die("Query Falied" . mysqli_error($conection));
-        }
+        // $query = "SELECT user_randSalt FROM users ";
+        // $select_randSalt_query = mysqli_query($conection, $query);
 
-        $row = mysqli_fetch_array($select_randSalt_query);
-        $salt = $row['user_randSalt'];
-        $password = crypt($password, $salt);
+        // if (!$select_randSalt_query) {
+        //     die("Query Falied" . mysqli_error($conection));
+        // }
+
+        // $row = mysqli_fetch_array($select_randSalt_query);
+        // $salt = $row['user_randSalt'];
+        // $password = crypt($password, $salt);
      
 
         $query = "INSERT INTO users (user_username, user_email, user_password, user_role) ";

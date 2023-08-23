@@ -6,15 +6,16 @@ if (isset($_GET['edit_user'])) {
 $query = "SELECT * FROM users WHERE user_id = $the_user_id ";
 $select_user_query = mysqli_query($conection, $query);
 while ($row = mysqli_fetch_assoc($select_user_query)) {
-    $user_id =  $row['user_id'];
-    $user_username =  $row['user_username'];
-    $user_password =  $row['user_password'];
-    $user_firstname =  $row['user_firstname'];
-    $user_lastname =  $row['user_lastname'];
-    $user_email =  $row['user_email'];
-    $user_image =  $row['user_image'];
-    $user_role =  $row['user_role'];
+    $user_id = $row['user_id'];
+    $user_username = $row['user_username'];
+    $user_password = $row['user_password'];
+    $user_firstname = $row['user_firstname'];
+    $user_lastname = $row['user_lastname'];
+    $user_email = $row['user_email'];
+    $user_image = $row['user_image'];
+    $user_role = $row['user_role'];
 }
+
 // UPDATE USER
 if (isset($_POST['update_user'])) {
     $user_username = $_POST['user_username'];
@@ -38,30 +39,42 @@ if (isset($_POST['update_user'])) {
         }
     }
 
-    $query = "SELECT user_randSalt FROM users";
-    $select_randSalt_query = mysqli_query($conection, $query);
-   
+    // $query = "SELECT user_randSalt FROM users";
+    // $select_randSalt_query = mysqli_query($conection, $query);
 
-    if (!$select_randSalt_query) {
-        die("Query Falied" . mysqli_error($conection));
+
+    // if (!$select_randSalt_query) {
+    //     die("Query Falied" . mysqli_error($conection));
+    // }
+
+    // $row = mysqli_fetch_array($select_randSalt_query);
+    // $salt = $row['user_randSalt'];
+    // $HashedPassword = crypt($user_password, $salt);
+
+    if (!empty($user_password)) {
+        $query_password = "SELECT user_password FROM users WHERE user_id = $the_user_id";
+        $get_user = mysqli_query($conection, $query_password);
+        confirmQuery($get_user);
+
+        $row = mysqli_fetch_array($get_user);
+        $db_user_password = $row['user_password'];
+
+        if (!$db_user_password != $user_password) {
+            $HashedPassword = password_hash($user_password, PASSWORD_BCRYPT, array('cost => 12'));
+        }
+        $query = "UPDATE users SET ";
+        $query .= "user_username = '{$user_username}', ";
+        $query .= "user_password = '{$HashedPassword}', ";
+        $query .= "user_firstname = '{$user_firstname}', ";
+        $query .= "user_lastname = '{$user_lastname}', ";
+        $query .= "user_image = '{$user_image}', ";
+        $query .= "user_email = '{$user_email}', ";
+        $query .= "user_role = '{$user_role}' ";
+        $query .= " WHERE user_id LIKE {$the_user_id} ";
+
+        $update_user = mysqli_query($conection, $query);
+        confirmQuery($update_user);
     }
-
-    $row = mysqli_fetch_array($select_randSalt_query);
-    $salt = $row['user_randSalt'];
-    $HashedPassword = crypt($user_password, $salt);
-    
-    $query = "UPDATE users SET ";
-    $query .= "user_username = '{$user_username}', ";
-    $query .= "user_password = '{$HashedPassword}', ";
-    $query .= "user_firstname = '{$user_firstname}', ";
-    $query .= "user_lastname = '{$user_lastname}', ";
-    $query .= "user_image = '{$user_image}', ";
-    $query .= "user_email = '{$user_email}', ";
-    $query .= "user_role = '{$user_role}' ";
-    $query .= " WHERE user_id LIKE {$the_user_id} ";
-
-    $update_user = mysqli_query($conection, $query);
-    confirmQuery($update_user);
 }
 ?>
 
@@ -77,17 +90,17 @@ if (isset($_POST['update_user'])) {
         <input value="<?php echo $user_lastname; ?>" class="form-cotrol" type="text" name="user_lastname">
     </div>
 
-   <select name="user_role" id="">
-     <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
-    <?php  
-      if ($user_role == 'admin') {
-         echo "<option value='subscriber'>subscriber</option>";
-      }else{
-         echo "<option value='admin'>admin</option>";
-      }
-    ?>
-    
-   </select>
+    <select name="user_role" id="">
+        <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
+        <?php
+        if ($user_role == 'admin') {
+            echo "<option value='subscriber'>subscriber</option>";
+        } else {
+            echo "<option value='admin'>admin</option>";
+        }
+        ?>
+
+    </select>
 
     <div class="form-group">
         <img width="100" src="../images/<?php echo $user_image; ?>" alt="">
@@ -106,7 +119,7 @@ if (isset($_POST['update_user'])) {
 
     <div class="form-group">
         <label for="content">Password</label>
-        <input value="<?php echo $user_password; ?>" class="form-cotrol" type="password" name="user_password">
+        <input autocomplete="off" value="" class="form-cotrol" type="password" name="user_password">
     </div>
 
     <div class="form-group">

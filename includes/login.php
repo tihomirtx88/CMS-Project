@@ -27,10 +27,10 @@ if (isset($_POST['login'])) {
     $salt = $row['user_randSalt'];
   }
   //CRYPT USER PASSWORD
-  $HashedPassword = crypt($password, $user_password);
+  // $HashedPassword = crypt($password, $user_password);
   
   // CHECK IS IT THE SAME PASSWORD
-  if ($HashedPassword === $user_password) {
+  if (password_verify($password, $user_password)) {
     $_SESSION['username'] = $user_username;
     $_SESSION['user_firstname'] = $user_firstname;
     $_SESSION['user_lastname'] = $user_lastname;
