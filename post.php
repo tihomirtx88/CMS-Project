@@ -93,6 +93,7 @@ include "includes/navigation.php";
                     $query .= "WHERE post_id = $the_post_id ";
                     // CHECK FOR EMPTY FIELD
                     $update_comments_count = mysqli_query($conection, $query);
+
                 }else{
                     echo "<script>alert('Fields cannot be empty')</script>";
                 }

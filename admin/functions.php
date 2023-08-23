@@ -1,8 +1,37 @@
-
-
 <?php
 
-function confirmQuery($result){
+function user_online()
+{
+    if (isset($_GET['onlineusers'])) {
+        global $conection;
+        if (!$conection) {
+            session_start();
+            include("../includes/db.php");
+            // keep user id who is in admin aria 
+            $session = session_id();
+            $time = time();
+            $time_out_in_seconds = 30;
+            $time_out = $time - $time_out_in_seconds;
+            //   GET USERS WITH THIS SESSION
+            $query = "SELECT * FROM users_online WHERE user_session = '$session'";
+            $send_query = mysqli_query($conection, $query);
+            $count = mysqli_num_rows($send_query);
+            if ($count == null) {
+                mysqli_query($conection, "INSERT INTO users_online(user_session, user_time) VALUES('$session','$time')");
+            } else {
+                mysqli_query($conection, "UPDATE users_online SET user_time = '$time' WHERE user_session = '$session'");
+            }
+            $users_online_query = mysqli_query($conection, "SELECT * FROM users_online WHERE user_time > '$time_out'");
+            // return $count_user = mysqli_num_rows($users_online_query);
+            echo $count_user = mysqli_num_rows($users_online_query);
+        }
+    } //get request isset
+}
+
+user_online();
+
+function confirmQuery($result)
+{
     global $conection;
     if (!$result) {
         die("QUERY FALIED" . mysqli_error($conection));
@@ -49,8 +78,8 @@ function find_all_categories()
     $query = 'SELECT * FROM category ';
     $select_category = mysqli_query($conection, $query);
     while ($row = mysqli_fetch_assoc($select_category)) {
-        $categ_title =  $row['category_title'];
-        $categ_id =  $row['category_id'];
+        $categ_title = $row['category_title'];
+        $categ_id = $row['category_id'];
         echo "<tr>";
         echo " <td>{$categ_id}</td>";
         echo " <td>{$categ_title}</td>";
