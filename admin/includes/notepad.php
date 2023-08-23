@@ -5,6 +5,7 @@ if (isset($_GET['p_id'])) {
 }
 $query = "SELECT * FROM posts WHERE post_id LIKE $the_post_id ";
 $select_posts_by_id = mysqli_query($conection, $query);
+
 while ($row = mysqli_fetch_assoc($select_posts_by_id)) {
     $post_id = $row['post_id'];
     $post_category_id = $row['post_category_id'];
