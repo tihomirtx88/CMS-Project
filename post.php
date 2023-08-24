@@ -29,7 +29,7 @@ include "includes/navigation.php";
             }
 
         //    TAKE ALL POST WHERE POST ID IS = THE POST ID
-            $query = "SELECT * FROM posts WHERE post_id LIKE $the_post_id ";
+            $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
             $select_all_posts_query = mysqli_query($conection, $query);
             while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                 $post_id = $row['post_id'];
@@ -81,22 +81,23 @@ include "includes/navigation.php";
                 $comment_email = $_POST['comment_email'];
                 $comment_content = $_POST['comment_content'];
 
-                if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
-                    $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
-                    $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
-                    $create_comment_query = mysqli_query($conection, $query);
-                    if (!$create_comment_query) {
-                        die("QUERY FALIED" . mysqli_error($conection));
-                    }
-                    // increese comment count 
-                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                    $query .= "WHERE post_id = $the_post_id ";
-                    // CHECK FOR EMPTY FIELD
-                    $update_comments_count = mysqli_query($conection, $query);
-
-                }else{
+                if (empty($comment_author) && empty($comment_email) && empty($comment_content)) {
                     echo "<script>alert('Fields cannot be empty')</script>";
                 }
+
+                $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
+                $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
+                $create_comment_query = mysqli_query($conection, $query);
+                if (!$create_comment_query) {
+                    die("QUERY FALIED" . mysqli_error($conection));
+                }
+                // increese comment count 
+                // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                // $query .= "WHERE post_id = $the_post_id ";
+
+                // CHECK FOR EMPTY FIELD
+                $update_comments_count = mysqli_query($conection, $query);
+                header("Location: index.php");
             }
             ?>
 
