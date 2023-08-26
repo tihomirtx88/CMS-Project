@@ -3,7 +3,7 @@
    if (isset($_POST['create_post'])) {
    
     $post_title =  $_POST['post_title'];
-    $post_author =  $_POST['post_author'];
+    $post_user =  $_POST['post_user'];
     $post_category_id =  $_POST['post_category_id'];
     $post_status =  $_POST['post_status'];
 
@@ -18,10 +18,10 @@
     move_uploaded_file($post_image_temp, "../images/$post_image" );
 
     
-    $query = "INSERT INTO posts(post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,post_comment_count,post_status) ";
+    $query = "INSERT INTO posts(post_category_id,post_title,post_user,post_date,post_image,post_content,post_tags,post_comment_count,post_status) ";
 
     $query .= 
-    "VALUES({$post_category_id},'{$post_title}','{$post_author}',now() ,'{$post_image}','{$post_content}','{$post_tags}',{$post_comment_count},'{$post_status}' )";
+    "VALUES({$post_category_id},'{$post_title}','{$post_user}',now() ,'{$post_image}','{$post_content}','{$post_tags}',{$post_comment_count},'{$post_status}' )";
 
     $crate_post_query = mysqli_query($conection, $query);
     confirmQuery($crate_post_query);
@@ -36,6 +36,7 @@
     </div>
 
     <div class="form-group">
+    <label for="category">Category</label>
        <select name="post_category_id" id="post_category_id">
         <!-- GET ALL CATEGORY FOR SELECT ELEMENT  -->
           <?php 
@@ -52,9 +53,27 @@
        </select>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="author">Post Author</label>
         <input class="form-cotrol" type="text" name="post_author">
+    </div> -->
+
+    <div class="form-group">
+    <label for="users">Users</label>
+       <select name="post_user" id="post_user_id">
+        <!-- GET ALL CATEGORY FOR SELECT ELEMENT  -->
+          <?php 
+             $users_query = "SELECT * FROM users ";
+             $select_users = mysqli_query($conection, $users_query);
+             confirmQuery($select_users);
+             while ($row = mysqli_fetch_assoc($select_users)) {
+                 $username =  $row['user_username'];
+                 $user_id =  $row['user_id'];
+
+                 echo "<option value='{$username}'>{$username}</option>";
+             }
+          ?>
+       </select>
     </div>
 
     <div class="form-group">

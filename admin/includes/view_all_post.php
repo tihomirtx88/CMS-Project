@@ -70,7 +70,7 @@
                 <th>Id</th>
                 <th>Post Category</th>
                 <th>Title</th>
-                <th>Author</th>
+                <th>User</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Image</th>
@@ -94,6 +94,7 @@
                 $post_category_id =  $row['post_category_id'];
                 $post_title =  $row['post_title'];
                 $post_author =  $row['post_author'];
+                $post_user =  $row['post_user'];
                 $post_date =  $row['post_date'];
                 $post_image =  $row['post_image'];
                 $post_content =  $row['post_content'];
@@ -110,6 +111,7 @@
                 echo "<td>$post_id</td>";
                 $query = "SELECT * FROM category WHERE category_id LIKE $post_category_id ";
                 $select_category = mysqli_query($conection, $query);
+
                 while ($row = mysqli_fetch_assoc($select_category)) {
                     $categ_title =  $row['category_title'];
                     $categ_id =  $row['category_id'];
@@ -118,7 +120,13 @@
 
                 // Vizualizate
                 echo "<td>$post_title</td>";
-                echo "<td>$post_author</td>";
+                
+                if (!empty($post_author)) {
+                    echo "<td>$post_author</td>";
+                }else if(!empty($post_user)){
+                    echo "<td>$post_user</td>";
+                }
+
                 echo "<td>$post_status</td>";
                 echo "<td>$post_date</td>";
                 echo "<td><img width='100' height='auto' src='../images/$post_image' alt='images''></td>";
