@@ -71,7 +71,7 @@ if (isset($_POST['register'])) {
                                 <input type="password" name="password" id="key" class="form-control" placeholder="Password">
                             </div>
 
-                            <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                            <input type="submit" name="register" id="btn-register" class="btn btn-custom btn-lg btn-block" value="Register">
                         </form>
 
                     </div>

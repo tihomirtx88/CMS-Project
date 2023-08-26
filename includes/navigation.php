@@ -31,6 +31,9 @@
         <li>
           <a href="registration.php">Registracion</a>
         </li>
+        <li>
+          <a href="contact.php">Contact</a>
+        </li>
         <?php
         if (isset($_SESSION['user_role'])) {
           echo 'first issset';
