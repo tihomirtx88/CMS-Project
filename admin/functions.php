@@ -1,4 +1,8 @@
 <?php
+function escape($string){
+  global $conection;
+  return mysqli_real_escape_string($conection, trim($string));
+}
 
 function user_online()
 {
